@@ -64,7 +64,7 @@ def run_server(gui : Gui, ip=LOCALHOST, port=PORT):
 
 
     def func():
-        gui.status = "DisConnected"
+        gui.status = "Disconnected"
     gui.execute_in_main_thread(func)
     listen_socket.close()
     send_socket.close()
