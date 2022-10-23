@@ -37,7 +37,15 @@ def recv(gui : Gui, recv_socket: socket, from_name: str):
 
 def run_server(gui : Gui, ip=LOCALHOST, port=PORT):
     listen_socket = socket(AF_INET, SOCK_STREAM)
-    listen_socket.bind((ip, port))
+
+    sockaddr = (ip, port)
+
+    if not all([sp.isnumeric() for sp in ip.split(sep='.')]):
+        print(sockaddr)
+        ((family, socktype, proto, cannoname, sockaddr),) = getaddrinfo(ip, port, AF_INET, SOCK_STREAM)
+        print(sockaddr)
+
+    listen_socket.bind(sockaddr)
     listen_socket.listen(2)
     def func():
         gui.status = "Listening..."
@@ -64,20 +72,27 @@ def run_server(gui : Gui, ip=LOCALHOST, port=PORT):
     IS_CONNECT=False
     server_sockets.pop()
 
-def run_client(gui : Gui, ip=LOCALHOST, port=PORT):
+def run_client(gui : Gui, ip: str=LOCALHOST, port=PORT):
     recv_socket = socket(AF_INET, SOCK_STREAM)
     send_socket = socket(AF_INET, SOCK_STREAM)
     time_wait = 0
     time_count = 1
     time_out = 100
 
+    sockaddr = (ip, port)
+
+    if not all([sp.isnumeric() for sp in ip.split(sep='.')]):
+        print(sockaddr)
+        ((family, socktype, proto, cannoname, sockaddr),) = getaddrinfo(ip, port, AF_INET, SOCK_STREAM)
+        print(sockaddr)
+
     while True:
         try:
             def func():
                 gui.status = "Connecting..."
             gui.execute_in_main_thread(func)
-            recv_socket.connect((ip, port))
-            send_socket.connect((ip, port))
+            recv_socket.connect(sockaddr)
+            send_socket.connect(sockaddr)
             break
         except ConnectionRefusedError as e:
             if time_wait <= time_out:
