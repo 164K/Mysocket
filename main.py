@@ -1,11 +1,15 @@
 from distutils.filelist import glob_to_re
 from guietta import Gui, _, III, ___, R0
 from PyQt5 import QtWidgets, QtCore
-from server_client import *
+# from server_client import *
+from socket import *
 import threading
 
 IS_CONNECT = False
 server_sockets = []
+LOCALHOST = '127.0.0.1'
+PORT = 60000
+BUFLEN = 1024
 
 def send(gui : Gui, send_socket: socket, to_name: str):
     send_msg = gui.sendmsg
@@ -125,4 +129,6 @@ gui = Gui(
 gui.Send = click_send
 gui.Connect = click_connect
 gui.status = "Disconnected"
-gui.run()
+
+if __name__ == "__main__":
+    gui.run()
