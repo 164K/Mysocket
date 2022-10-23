@@ -1,4 +1,3 @@
 from server_client import *
 
-
-run_server('0.0.0.0')
+run_client('192.168.31.225')

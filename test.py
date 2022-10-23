@@ -1,7 +1,6 @@
 import threading
 import typing
 import time
-
 def simple_func(x: int):
     print("Start")
     time.sleep(1)

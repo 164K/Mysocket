@@ -28,7 +28,13 @@ def recv(recv_socket: socket, from_name: str):
 
 def run_server(ip=LOCALHOST, port=PORT):
 	listen_socket = socket(AF_INET, SOCK_STREAM)
-	listen_socket.bind((ip, port))
+
+	sockaddr = (ip, port)
+
+	if not all([sp.isnumeric() for sp in ip.split(sep='.')]):
+		((_, _, _, _, sockaddr),) = getaddrinfo(ip, port, AF_INET, SOCK_STREAM)
+
+	listen_socket.bind(sockaddr)
 	listen_socket.listen(2)
 	print(f"[Listen] {ip} is waiting for connection on PORT {port}...")
 	send_socket, (send_IP, send_PORT) = listen_socket.accept()
@@ -61,10 +67,16 @@ def run_client(ip=LOCALHOST, port = PORT):
 	time_count = 1
 	time_out = 100
 
+	sockaddr = (ip, port)
+
+	if not all([sp.isnumeric() for sp in ip.split(sep='.')]):
+		((_, _, _, _, sockaddr),) = getaddrinfo(ip, port, AF_INET, SOCK_STREAM)
+
+
 	while True:
 		try:
-			recv_socket.connect((ip, port))
-			send_socket.connect((ip, port))
+			recv_socket.connect(sockaddr)
+			send_socket.connect(sockaddr)
 			break
 		except ConnectionRefusedError as e:
 			if time_wait <= time_out:
