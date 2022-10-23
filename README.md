@@ -7,7 +7,7 @@
 ```Python
 from server_client import *
 ```
-然后调用`run_server`函数或`run_client`函数来运行服务器或客户端。两个函数均可以传入`ip`、`port`来指定需要连接/绑定的地址。默认`ip='127.0.0.1'`、`port=60000`。
+然后调用`run_server`函数或`run_client`函数来运行服务器或客户端。两个函数均可以传入`ip`、`port`来指定需要连接/绑定的地址。默认`ip='127.0.0.1'`、`port=60000`（或者直接运行已经写好的默认的server.py与server_client.py）。
 
 之后在命令行等待连接，连接成功后就可以双向通信了。想结束对话，输入`exit`并回车即可；不过本代码实现是创建两个相互传输的socket来实现的，因此结束需要服务端与客户端都输入`exit`退出，程序才会结束。结束后，需要再次运行代码重启。
 
@@ -31,3 +31,11 @@ PyQt5==5.15.7
 Linux上的服务端相应展示：
 
 ![pic3](image/README/linux_show.jpg)
+
+## IP & PORT
+
+客户端与服务端的IP地址均填写服务端所绑定的IP地址。一般来说，若在本机同时运行server与client，IP只需为默认的`127.0.0.1`即可；若在局域网中两台机器分别运行，则IP填写为当前局域网的IP地址（IPv4），一般为`192.168.xx.xxx`。端口号默认为`60000`，可以替换为0~65536之间的任意无占用端口，不过需要保证两端端口设置一致。
+
+# References
+
+[1] guietta库文档 - https://guietta.readthedocs.io/en/latest/
