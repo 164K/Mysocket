@@ -1,9 +1,6 @@
-from distutils.filelist import glob_to_re
 from guietta import Gui, _, III, ___, R0
 from PyQt5 import QtWidgets, QtCore
-# from server_client import *
 from socket import *
-import threading
 
 IS_CONNECT = False
 server_sockets = []
