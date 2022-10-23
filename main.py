@@ -1,6 +1,7 @@
 from guietta import Gui, _, III, ___, R0
 from PyQt5 import QtWidgets, QtCore
 from socket import *
+import time
 
 IS_CONNECT = False
 server_sockets = []
